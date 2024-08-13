@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/src/main.ts" type="module"></script>
+</body>
+<script>
+  // const r = deepReactive({ deep: { nested: 3 }, shallow: 5 })
+
+  // function addDeep() {
+  //   r.deep.nested++;
+  // }
+
+  // function addShallow() {
+  //   r.shallow++;
+  // }
+
+  // function get() {
+  //   console.log(r.deep.nested);
+  // }
+
+  // function deepReactive(value) {
+  //   const handler = {
+  //     get(target, prop, receiver) {
+  //       return target[prop];
+  //     },
+  //     set(target, prop, value, receiver) {
+  //       console.log("set", target, prop, value, receiver);
+  //       target[prop] = value;
+  //       return true;
+  //     }
+  //   }
+
+  //   return new Proxy(value, handler);
+  // }
+
+  // function isObject(value) {
+  //   if (value === null) { return false;}
+  //   return ( (typeof value === 'function') || (typeof value === 'object') ) && !Array.isArray(value);
+  // }
+
+  // function newCreateReactive(value) {
+  //   const handler = {
+  //     get(target, prop, receiver) {
+  //       // console.log("get", target, prop, receiver);
+
+  //       return target[prop];
+  //     },
+  //     set(target, prop, value, receiver) {
+  //       // console.log("set", target, prop, value, receiver);
+
+  //       if (prop === '__listeners') {
+  //         target.__listeners = value;
+  //         return true;
+  //       }
+
+  //       target[prop] = value;
+  //       target.__listeners.forEach(cb => cb(value));
+  //       return true;
+  //     }
+  //   }
+
+  //   if (isObject(value)) {
+  //     const newObject = {};
+      
+  //     for (const key in value) {
+  //       newObject[key] = createReactive(value[key]);
+  //     }
+
+  //     return new Proxy({ value: newObject, __listeners: [], __isReactive: true, }, handler);
+  //   }
+
+  //   if (Array.isArray(value)) {
+  //     const newArray = [];
+
+  //     for (const item of value) {
+  //       newArray.push(createReactive(item));
+  //     }
+
+  //     return new Proxy({ value: newArray, __listeners: [], __isReactive: true, }, handler);
+  //   }
+
+  //   return new Proxy({ value, __listeners: [], __isReactive: true, }, handler);
+  // }
+
+  // function createReactive(value) {
+  //   const handler = {
+  //     get(target, prop, receiver) {
+  //       // console.log("get", target, prop, receiver);
+
+  //       return target[prop];
+  //     },
+  //     set(target, prop, value, receiver) {
+  //       // console.log("set", target, prop, value, receiver);
+
+  //       if (prop === '__listeners') {
+  //         target.__listeners = value;
+  //         return true;
+  //       }
+
+  //       target[prop] = value;
+  //       target.__listeners.forEach(cb => cb(value));
+  //       return true;
+  //     }
+  //   }
+
+  //   if (isObject(value)) {
+  //     const newObject = {};
+      
+  //     for (const key in value) {
+  //       newObject[key] = createReactive(value[key]);
+  //     }
+
+  //     return new Proxy({ value: newObject, __listeners: [], __isReactive: true, }, handler);
+  //   }
+
+  //   if (Array.isArray(value)) {
+  //     const newArray = [];
+
+  //     for (const item of value) {
+  //       newArray.push(createReactive(item));
+  //     }
+
+  //     return new Proxy({ value: newArray, __listeners: [], __isReactive: true, }, handler);
+  //   }
+
+  //   return new Proxy({ value, __listeners: [], __isReactive: true, }, handler);
+  // }
+
+  // function watch(deps, callback) {
+  //   if (Array.isArray(deps)) {
+  //     deps.forEach((dep) => dep.__listeners.push(callback));
+  //     return;
+  //   }
+
+  //   deps.__listeners.push(callback);
+  // }
+
+  // const rootNode = document.getElementById("app");
+
+  // function createComponent({ tag, props, events, setup, children }) {
+  //   return {
+  //     isRComponent: true,
+  //     tag,
+  //     props,
+  //     events,
+  //     children,
+  //     setup
+  //   }
+  // }
+
+  // const rootComponent = createComponent({
+  //   tag: "div",
+  //   setup: () => {
+  //     const counter = createReactive({ count: 12 });
+  //     const arrayCounter = createReactive([1, 2, 3]);
+  //     console.log(arrayCounter);
+
+  //     function addCounter() {
+  //       counter.value.count.value++;
+  //     }
+
+  //     function subtractCounter() {
+  //       counter.value.count.value--;
+  //     }
+
+  //     return { counter, arrayCounter, addCounter, subtractCounter }
+  //   },
+  //   children: ({ counter, arrayCounter, addCounter, subtractCounter }) => [
+  //     createComponent({
+  //       tag: "button",
+  //       events: () => [
+  //         { name: "click", action: addCounter }
+  //       ],
+  //       children: () => "add",
+  //     }),
+  //     createComponent({
+  //       tag: "button",
+  //       events: () => [
+  //         { name: "click", action: subtractCounter }
+  //       ],
+  //       children: () => "subtract",
+  //     }),
+  //     createComponent({
+  //       tag: "button",
+  //       setup: () => ({
+  //         action: () => console.log("selfSufficient"),
+  //       }),
+  //       events: ({ action }) => [
+  //         { name: "click", action }
+  //       ],
+  //       children: () => "selfSufficient",
+  //     }),
+  //     createComponent({
+  //       tag: "span",
+  //       children: () => counter.value.count,
+  //     }),
+  //     createComponent({
+  //       tag: "ul",
+  //       children: () => arrayCounter.value.map((item, index) => createComponent({
+  //         tag: "li",
+  //         children: () => item,
+  //         events: () => [{ name: "click", action: () => {item.value++; console.log("click", index)} }]
+  //       }))
+  //     }),
+  //   ]
+  // })
+
+  // function render(component) {
+  //   if (component.isRComponent) {
+  //     const el = document.createElement(component.tag);
+
+  //     const setup = component.setup?.();
+
+  //     if (component.events) {
+  //       for (const event of component.events(setup)) {
+  //         el.addEventListener(event.name, event.action)
+  //       }
+  //     }
+
+  //     const children = component.children(setup)
+  //     if (!Array.isArray(children)) {
+  //       if (children.__isReactive) {
+  //         children.__listeners.push((value) => {
+  //           console.log(value);
+  //           el.replaceChildren(value)
+  //         });
+  //         el.append(children.value);
+  //         return el;
+  //       } else {
+  //         el.append(children);
+  
+  //         return el;
+  //       }
+
+  //     }
+
+
+  //     for (const child of children) {
+  //       el.append(render(child));
+  //     }
+
+  //     return el;
+  //   }
+  // }
+
+  // rootNode.append(render(rootComponent));
+</script>
+</html>
